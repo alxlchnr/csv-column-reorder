@@ -1,0 +1,27 @@
+{
+  "name": "csv-column-reorder",
+  "version": "0.0.1",
+  "description": "allows to rearrange the columns of csv files",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alxlchnr/csv-column-reorder.git"
+  },
+  "author": "alxlchnr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alxlchnr/csv-column-reorder/issues"
+  },
+  "homepage": "https://github.com/alxlchnr/csv-column-reorder#readme",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "mock-fs": "^3.0.0",
+    "proxyquire": "^1.6.0"
+  },
+  "dependencies": {
+    "array_reorder": "^0.0.3"
+  }
+}
