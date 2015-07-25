@@ -24,7 +24,8 @@ suite('csv-column-reorder test', function () {
         array_reorder_stub.reorder.withArgs(['1', 'Test', '2015-07-19'], newOrder).returns(['Test', '1']);
         array_reorder_stub.reorder.throws();
 
-        fs_stub.appendFile = sinon.spy();
+        fs_stub.appendFile = sinon.stub();
+        fs_stub.appendFile.callsArg(2);
 
         sut.reorder('path/to/file/test.csv', newOrder, function (err) {
             assert(!err);

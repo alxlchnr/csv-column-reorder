@@ -11,7 +11,7 @@ var separator = process.argv[4];
 
 var callBack = function (err) {
     if (err) {
-        console.log('something went wrong');
+        console.log('something went wrong: '+err);
     } else {
         console.log('success');
     }

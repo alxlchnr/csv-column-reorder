@@ -8,12 +8,12 @@ Therefore I descided to write this module and learn node by the way. This module
 var csv = require('./lib/csv-column-reorder.js');
 
 var filePath = process.argv[2]; // path to your file
-var newOrder = JSON.parse(process.argv[3]); //{0: 1, 1: 0} will exchange the second column of a csv file with the first
-var separator = process.argv[4];
+var newOrder = JSON.parse(process.argv[3]); //'{"0": 1, "1": 0}' will exchange the second column of a csv file with the first
+var separator = process.argv[4]; // default is ';'
 
 var callBack = function (err) {
     if (err) {
-        console.log('something went wrong');
+        console.log('something went wrong: '+err);
     } else {
         console.log('success');
     }
