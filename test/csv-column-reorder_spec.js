@@ -1,7 +1,8 @@
 'use strict';
-var proxyquire = require('proxyquire').noPreserveCache();
+var proxyquire = require('proxyquire');
 var mock = require('mock-fs');
 var assert = require('assert');
+var sinon = require('sinon');
 
 suite('csv-column-reorder test', function () {
 
@@ -9,56 +10,32 @@ suite('csv-column-reorder test', function () {
     var fs_stub = {};
 
     var sut = proxyquire('../lib/csv-column-reorder.js', {'array_reorder': array_reorder_stub, 'fs': fs_stub});
-    var appendCalls = 0;
-    var reorderCalls = 0;
-    var result = '';
     suiteSetup(function () {
         mock({
             'path/to/file/test.csv': mock.file({content: 'Id;Name;ChangedAt\n1;Test;2015-07-19'})
         });
-
     });
 
-    test('call array_reorder and fs.appendFile', function () {
+    test('call array_reorder and fs.appendFile', function (done) {
         var newOrder = {0: 1, 1: 0};
-        var testFile = 'path/to/file/test.csv';
-        array_reorder_stub.reorder = function (array, newOrderObject) {
-            reorderCalls += 1;
-            assert.equal(newOrderObject, newOrder);
-            if (reorderCalls == 1) {
-                assert.deepEqual(array, ['Id', 'Name', 'ChangedAt'], 'unexpected array for first reorder call');
-                return ['Name', 'Id'];
-            } else {
-                assert.deepEqual(array, ['1', 'Test', '2015-07-19'], 'unexpected array for second reorder call');
-                return ['Test', '1'];
-            }
-        };
+        var resultPath = 'path/to/file/test.csv' + '_reordered';
+        array_reorder_stub.reorder = sinon.stub();
+        array_reorder_stub.reorder.withArgs(['Id', 'Name', 'ChangedAt'], newOrder).returns(['Name', 'Id']);
+        array_reorder_stub.reorder.withArgs(['1', 'Test', '2015-07-19'], newOrder).returns(['Test', '1']);
+        array_reorder_stub.reorder.throws();
 
-        fs_stub.appendFile = function (filePath, data, callback) {
-            appendCalls += 1;
-            var expectedPath = testFile + '_reordered';
-            assert.equal(filePath, expectedPath);
-            if (appendCalls == 1) {
-                assert.equal(data, 'Name;Id\n', 'unexpected data for new csv\'s header');
-            } else {
-                assert.equal(data, 'Test;1\n', 'unexpected data for first csv line');
-            }
-            result += data;
-        };
+        fs_stub.appendFile = sinon.spy();
 
-        sut.reorder(testFile, newOrder, function () {
-            assert.equal(reorderCalls, 2);
-            assert.equal(appendCalls, 2);
-            assert.equal(result, 'Name;Id\nTest;1');
+        sut.reorder('path/to/file/test.csv', newOrder, function (err) {
+            assert(!err);
+            assert(array_reorder_stub.reorder.calledTwice);
+            assert(fs_stub.appendFile.calledTwice);
+            assert.equal(fs_stub.appendFile.firstCall.args[0], resultPath);
+            assert.equal(fs_stub.appendFile.firstCall.args[1], 'Name;Id\n');
+            assert.equal(fs_stub.appendFile.secondCall.args[0], resultPath);
+            assert.equal(fs_stub.appendFile.secondCall.args[1], 'Test;1\n');
+            done(err);
         });
 
     });
-
-
-    suiteTeardown(function () {
-        mock.restore();
-        reorderCalls = 0;
-        appendCalls = 0;
-    });
-
 });

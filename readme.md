@@ -7,13 +7,20 @@ Therefore I descided to write this module and learn node by the way. This module
 ```javascript
 var csv = require('./lib/csv-column-reorder.js');
 
-var filePath = process.argv[2];
+var filePath = process.argv[2]; // path to your file
 var newOrder = JSON.parse(process.argv[3]); //{0: 1, 1: 0} will exchange the second column of a csv file with the first
-var options = process.argv[4];
+var separator = process.argv[4];
 
-csv.reorder(filePath, newOrder, options);
+var callBack = function (err) {
+    if (err) {
+        console.log('something went wrong');
+    } else {
+        console.log('success');
+    }
+};
+csv.reorder(filePath, newOrder, callBack,separator);
 ```
 As this snippet is part of the starting point of the module it can be executed by command line.
 
 ### running tests
-I'm using mocha, proxyquire and mock-fs for my tests.
+I'm using mocha, proxyquire, mock-fs and sinon for my tests.
