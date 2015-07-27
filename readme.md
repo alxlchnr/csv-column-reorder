@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alxlchnr/csv-column-reorder.svg?branch=master)](https://travis-ci.org/alxlchnr/csv-column-reorder)
+
 csv-column-reorder
 ==============
 I often receive large CSV files for importing to postgre databases. I often struggle with random column orders of the csv files.
