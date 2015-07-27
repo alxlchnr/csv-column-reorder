@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/alxlchnr/csv-column-reorder.svg?branch=master)](https://travis-ci.org/alxlchnr/csv-column-reorder)
+[![npm version](https://badge.fury.io/js/csv-column-reorder.svg)](http://badge.fury.io/js/csv-column-reorder)
 
 csv-column-reorder
 ==============
