@@ -1,6 +1,6 @@
 {
   "name": "csv-column-reorder",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "allows to rearrange the columns of csv files",
   "main": "app.js",
   "scripts": {
