@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/alxlchnr/csv-column-reorder.svg?branch=master)](https://travis-ci.org/alxlchnr/csv-column-reorder)
 [![npm version](https://badge.fury.io/js/csv-column-reorder.svg)](http://badge.fury.io/js/csv-column-reorder)
+[![NPM](https://nodei.co/npm-dl/csv-column-reorder.png?months=3&height=2)](https://nodei.co/npm/csv-column-reorder/)
 
 csv-column-reorder
 ==============
